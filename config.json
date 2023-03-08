@@ -1,0 +1,17 @@
+{
+    "development": {
+        "username": "root",
+        "password": "Opsueaxqx1578!",
+        "database": "lettuce",
+        "host": "127.0.0.1",
+        "dialect": "mysql",
+        "logging":false
+    },
+    "production": {
+        "username": "root",
+        "password": "그때가서 정함",
+        "database": "lettuce",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    }
+}

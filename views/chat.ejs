@@ -1,0 +1,215 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lettuce 채팅</title>
+    <link rel="stylesheet" href="/static/css/chat.css" />
+    <style>
+      body{
+        overflow-y: scroll
+      }
+    </style>
+  </head>
+  <body>
+    <%-include('navbar.ejs') %>
+    <div class="chatWrapper">
+      <div class="chatList">
+        <div class="chatFollowings chatCard">
+          <div class="chatHeader"><span>팔로잉 목록</span></div>
+          <% if (data.length==0) { %>
+          <div class="noFollow" style="text-align: center">
+            아무도 팔로잉 중이지 않으시네요!
+          </div>
+          <% } for (let i=0 ; i < data.length ; i++) { %>
+
+          <div class="followWrapper" value="<%= data[i].id %>">
+            <img
+              onclick="location.href=`/profile?id=<%= data[i].id %>`"
+              src="<%= data[i].profile %>"
+              alt=""
+            />
+            <div class="chatNickName">
+              <span onclick="location.href=`/profile?id=<%= data[i].id %>`"
+                ><%= data[i].nickName %></span
+              >
+              <span onclick="location.href=`/profile?id=<%= data[i].id %>`">
+                <%= data[i].email %></span
+              >
+            </div>
+            <button
+              value="<%= data[i].id %>"
+              class="chatButton"
+              onclick="chatRoom(event)"
+            >
+              채팅하기
+            </button>
+          </div>
+
+          <% } %>
+        </div>
+        <div class="roomList chatCard">
+          <div class="chatHeader"><span>채팅방 목록</span></div>
+          <div class="roomContent">
+            <% for ( let i=0; i< room.length ; i++) { %>
+            <div
+              class="roomWrapper"
+              url="<%= room[i].RoomId %>"
+              onclick='location.href="/chat/room/<%= room[i].RoomId %>"'
+            >
+              <img src="<%= room[i].profile %>" alt="" />
+              <div class="roomNickName">
+                <span><%= room[i].nickName %></span>
+                <span><%= room[i].email %></span>
+              </div>
+              <div class="roomTime"><%= room[i].time %></div>
+              <div class="roomCnt"><%= room[i].chatCnt %></div>
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+    integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+  <script src="../static/js/notification.js"></script>
+  <script src="../static/js/searchUser.js"></script>
+  <script>
+    const chatSocket = io.connect(`http://49.50.167.217:8000/chat`, {
+      path: "/socket.io", cors: { origin: '*' }
+    });
+    chatSocket.on("room", (data) => {
+      const list = document.querySelector(".roomContent");
+      const room = document.createElement("div");
+      room.classList.add("roomWrapper");
+      room.setAttribute("url", data.RoomId);
+      room.setAttribute("onclick", `location.href="/chat/room/${data.RoomId}"`);
+      const profile = document.createElement("img");
+      profile.setAttribute("src", data.profile);
+      room.appendChild(profile);
+      const roomNickName = document.createElement("div");
+      roomNickName.classList.add("roomNickName");
+      const span1 = document.createElement("span");
+      const span2 = document.createElement("span");
+      span1.innerText = data.nickName;
+      span2.innerText = data.email;
+      const time = document.createElement("div");
+      time.classList.add("roomTime");
+      time.innerText = "0초전";
+      const chatCnt = document.createElement("div");
+      chatCnt.classList.add("roomCnt");
+      chatCnt.innerText = "0";
+      room.append(time);
+      room.appendChild(chatCnt);
+      roomNickName.appendChild(span1);
+      roomNickName.appendChild(span2);
+      room.appendChild(roomNickName);
+      list.prepend(room);
+    });
+    chatSocket.on("chat", (data) => {
+      const list = document.querySelector(".roomContent");
+      console.log(data.RoomId);
+      document.querySelector(`.roomWrapper[url="${data.RoomId}"]`).remove();
+      const room = document.createElement("div");
+      room.classList.add("roomWrapper");
+      room.setAttribute("url", data.RoomId);
+      room.setAttribute("onclick", `location.href="/chat/room/${data.RoomId}"`);
+      const profile = document.createElement("img");
+      profile.setAttribute("src", data.profile);
+      room.appendChild(profile);
+      const roomNickName = document.createElement("div");
+      roomNickName.classList.add("roomNickName");
+      const span1 = document.createElement("span");
+      const span2 = document.createElement("span");
+      span1.innerText = data.nickName;
+      span2.innerText = data.email;
+      const time = document.createElement("div");
+      time.classList.add("roomTime");
+      time.innerText = data.time;
+      const chatCnt = document.createElement("div");
+      chatCnt.classList.add("roomCnt");
+      chatCnt.innerText = data.chatCnt;
+      room.appendChild(chatCnt);
+      room.append(time);
+      roomNickName.appendChild(span1);
+      roomNickName.appendChild(span2);
+      room.appendChild(roomNickName);
+      list.prepend(room);
+    });
+  </script>
+  <script>
+    document.querySelectorAll(".followWrapper").forEach(async (ele) => {
+      const res = await axios.get(
+        `/realtime/socket?id=${ele.getAttribute("value")}`
+      );
+      if (res.data.active) {
+        const div = document.createElement("div");
+        div.classList.add("chatFlag");
+        div.setAttribute("flag", "0");
+        const flag = document.createElement("div");
+        flag.classList.add("userActive");
+        const content = document.createElement("div");
+        content.innerText = "활동중";
+        content.classList.add("userText");
+        div.appendChild(flag);
+        div.appendChild(content);
+        ele.appendChild(div);
+      } else {
+        const div = document.createElement("div");
+        div.classList.add("chatFlag");
+        div.setAttribute("flag", "1");
+        const flag = document.createElement("div");
+        flag.classList.add("userInactive");
+        const content = document.createElement("div");
+        content.innerText = "휴식중";
+        content.classList.add("userText");
+        div.appendChild(flag);
+        div.appendChild(content);
+        ele.appendChild(div);
+      }
+    });
+    socket.on("active", (data) => {
+      const id = data.UserId;
+      const target = document.querySelector(
+        `.followWrapper[value="${id}"] .chatFlag`
+      );
+      if (target.getAttribute("flag") != "0") {
+        target.setAttribute("flag", "0");
+        target
+          .querySelector(".userInactive")
+          .setAttribute("class", "userActive");
+        target.querySelector(".userText").innerText = "활동중";
+      }
+    });
+    socket.on("inactive", (data) => {
+      const id = data.UserId;
+      const target = document.querySelector(
+        `.followWrapper[value="${id}"] .chatFlag`
+      );
+      if (target.getAttribute("flag") != "1") {
+        target.setAttribute("flag", "1");
+        target
+          .querySelector(".userActive")
+          .setAttribute("class", "userInactive");
+        target.querySelector(".userText").innerText = "휴식중";
+      }
+    });
+
+    async function chatRoom(event) {
+      console.log("Asdsd");
+      const res = await axios.get(
+        `/chat/enter?id=${event.target.getAttribute("value")}`
+      );
+      console.log(res);
+      console.log("asdsd");
+      console.log(res.data.url);
+      window.location = res.data.url;
+    }
+  </script>
+</html>

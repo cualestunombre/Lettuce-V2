@@ -1,0 +1,406 @@
+@font-face {
+    font-family: 'HallymGothic-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2204@1.0/HallymGothic-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+body{
+    margin: 0;
+    background-color: rgb(250,250,250);
+}
+
+.main{
+    background-color: rgb(250,250,250);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+#downScroll{
+    background-color: rgb(250,250,250);
+}
+.carousel-item img{
+    width:548px;
+    height: 500px;
+    object-fit: contain;
+}
+.card{
+    box-shadow: rgba(0, 0, 0, 0.4)  5px 4px 12px;
+    position: relative;
+
+    background-color: white;
+    width: 550px;
+    height: 600px;
+    margin-top: 50px;
+}
+header img{
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    border: 1px solid #cdc6c6;
+}
+
+ 
+header{
+    border-radius: 10px;
+    height: 70px;
+    background-color: rgb(250, 250, 250);
+}
+.createdAt{
+    position:absolute;
+    top:20px;
+    right:10px;
+    font-size: 12px;
+    color: grey;
+}
+.nickNameWrapper{
+    position:absolute;
+    top:20px;
+    left:70px;
+}
+.card_image img{
+    width: 100%;
+    height: 500px;
+    
+}
+.info{
+    height: 50px;
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+}
+.comment{
+    margin: 0rem 1rem 1rem 1rem;
+    border-bottom: 1px solid #bdbbbb;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+ 
+.comment_form form{
+    padding-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+}
+ 
+.comment_form form input{
+    width: 550px;
+    height: 30px;
+    border: none;
+    padding-left: 10px;
+}
+ 
+.comment_form form button{
+    font-size: 13px;
+    border: none;
+    background-color: white;
+}
+
+.come img{
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    border: 1px solid #cdc6c6;
+}
+
+.info i{
+    font-size: 1.5rem;
+}
+.info i:hover{
+    cursor: pointer;
+}
+.dnone{
+    display:none;
+}
+
+  
+  .square{
+    border:0;
+    width:80px;
+    padding:0px;
+    margin-top: 40px;
+    margin-left: calc(50% - 40px);
+    margin-left: -webkit-calc(50% - 40px);
+    margin-left: -moz-calc(50% - 40px);
+    background-color: rgb(250,250,250);
+  }
+  
+  .spin {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.1)  5px 4px 12px;
+    border:dashed 5px #87C228;
+    -webkit-animation-name: spin;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    background-color: rgb(250,250,250);
+    margin-bottom: 50px;
+  }
+  
+  @-webkit-keyframes spin {
+    from   {  -webkit-transform: rotate(0deg); }
+    to   {  -webkit-transform: rotate(360deg); }
+  }
+  #yeah{
+      width:500px;
+      height:500px;
+  }
+  .noFollowText{
+      margin-top: 40px;
+      font-size: 20px;
+      text-align: center;
+      font-family: 'HallymGothic-Regular';
+      margin-bottom: 20px;
+  }
+  #logo{
+      width:120px;
+
+  }
+  .noFollowers{
+    box-shadow: rgba(0, 0, 0, 0.1)  5px 4px 12px;
+      border-radius: 5px;
+     background-color:  #F9F4D9;
+    width:400px;
+    height:250px;
+    display: inline-block;
+  }
+  .subText{
+      font-size: 15px;
+      color: rgb(150,150,150);
+      font-family: 'HallymGothic-Regular';
+      text-align: center;
+      margin-top: none;
+  }
+  .more{
+      background-color: rgb(250,250,250);
+  }
+  .con{
+      background-color:rgb(250,250,250);
+    text-align: center;
+  }
+  html{
+      background-color: rgb(250,250,250);
+  }
+  
+  div.commentPlace{
+      margin-left:5px;
+      position: relative;
+      margin-bottom: 10px;
+  }
+  .come1{
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+.hash{
+    color:blue;
+}
+.hash:hover {
+    color: blue;
+}
+  #delete{
+    height: 30px;
+    position:absolute;
+    right:20px;
+    bottom:0px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: grey;
+    padding: 5px 9px;
+    font-size: 14px;
+   
+}
+#commentRegister{
+    height: 30px;
+    right:10px;
+    bottom:0px;
+    border: none;
+    border-radius: 5px;
+    background-color: #87C228;
+    
+    color: white;
+    padding: 5px 9px;
+    font-size: 14px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    margin-right: 10px;
+}
+#RegisterForm{
+    margin-bottom: 10px;
+    
+    width: 548px;
+    height: 35px;;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#re{
+    margin-left: 10px;
+    border: none;
+    width: 480px;
+}
+.bi-bookmark{
+    margin-right: 15px;
+    color:black;
+}
+.bi-bookmark-fill{
+    margin-right: 15px;
+    color:rgb(250, 208, 103);
+}
+
+.ll{
+    font-size: 12px;
+    color: rgb(158, 156, 154);
+    margin-left: 10px;
+    
+}
+/* likelist modal css */
+#llist{
+    height: 200px;
+    overflow-y:auto;
+} 
+
+.likeUser {
+    margin: 10px;
+    height: 40px;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+  }
+  .likeProfile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .userEmail {
+    font-family: 'HallymGothic-Regular';
+    color: rgb(140, 140, 140);
+    font-size: 12px !important;
+  }
+
+  .userName {
+    font-weight: bolder;
+    font-family: 'HallymGothic-Regular';
+    font-size: 15px !important;
+  }
+
+  /*commentlist modal css */
+#clist{
+    height: 200px;
+    overflow-y:auto;
+} 
+#comment-title{
+    margin-left: 201px;
+}
+.commentUser {
+    height: 40px;
+    display: flex;
+    align-items: center;
+  }
+  .commentProfile {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  .commentName {
+    font-weight: bolder;
+    font-family: 'HallymGothic-Regular';
+  }
+
+.bi-heart, .bi-heart-fill {
+    margin: 0 10px;
+}
+.fa-bookmark {
+    margin-right: 10px;
+}
+.come {
+    padding: 8px 0 0 30px;
+    width: 500px;
+    word-break:break-all;
+    font-size: 15px;
+}
+.commentTime{
+    color:#cdc6c6;
+    font-size: 10px;
+}
+
+
+.fa-trash:hover{
+    cursor: pointer;
+}
+.delBtn{
+    margin-left: 5px;
+    border: none;
+    width:30px;
+    height:25px;
+    border-radius: 5px;
+    color:black;
+    font-weight: 600;
+    font-size: 8px;
+    padding: 0;
+}
+.commentTime {
+    margin-left: 10px;
+    font-size: 12px;
+    color: grey;
+}
+
+#likeModal{
+    --bs-modal-width: 300px !important;
+}
+.up{
+    position: fixed;
+    bottom: 100px;
+    right: 40px;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    z-index: 100;
+}
+#upIcon, #downIcon {
+    font-size: 40px; 
+    color: #87C128;
+    opacity: 0.8;
+}
+.down{
+    position: fixed;
+    bottom: 35px;
+    right: 40px;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    z-index: 100;
+}
+#upIcon:hover, #downIcon:hover {
+    opacity: 1;
+}
+.videoPosting{
+    width: 100%;
+    height: 494px;
+}
+
+@media (max-width: 1261px) {
+    .UserList {
+        display: none;
+    }
+}
+@media (max-width: 769px) {
+    .up, .down {
+        display: none;
+    }
+}
+
+#No{
+    text-align: center;
+}
+.comments {
+    overflow-y: auto;
+    max-height: 300px;
+
+}

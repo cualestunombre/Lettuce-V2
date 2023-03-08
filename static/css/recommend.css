@@ -1,0 +1,128 @@
+.myprofile {
+    margin: 0px;
+}
+
+.UserList{
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.4)  5px 4px 12px;
+    position: absolute;
+    margin-top: 53px;
+    left: 50px;
+    width: 300px;
+    height: 360px;
+}
+.recommendForm{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 13px;
+}
+.recommendForm a{
+    font-size: 15px;
+}
+.recommend{
+    color:#4b9853;
+    font-size: 15px;
+}
+
+.recommendForm {
+    margin-bottom: 10px;
+}
+
+.recProfile {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.recUser {
+    height: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.recUserEmail {
+    font-family: 'HallymGothic-Regular';
+    color: rgb(140, 140, 140);
+    font-size: 12px !important;
+}
+
+.recUserName {
+    font-weight: bolder;
+    font-family: 'HallymGothic-Regular';
+    font-size: 15px !important;
+}
+
+.recCnt {
+    font-family: 'HallymGothic-Regular';
+    color: rgb(140, 140, 140);
+    font-size: 12px !important;
+}
+
+.recBottmom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 25px;
+}
+
+.followButton {
+    height: 25px;
+    right: 10px;
+    bottom: 0px;
+    border: none;
+    border-radius: 5px;
+    background-color: #87C228;
+    color: white;
+    padding: 5px 9px;
+    font-size: 12px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    margin-right: 10px;
+}
+
+#recModal .recommendForm{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 14px;
+}
+#recModal .recommendForm a {
+    font-weight: bolder;
+}
+#recModal .recommend{
+    color:#4b9853;
+    font-size: 15px;
+}
+.myprofile .recUser{
+  background-color: #F9F4D9;
+    border-radius: 5px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
+.AllUserList .myprofile .recUser{
+    background-color: #F9F4D9;
+      border-radius: 5px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+  
+  }
+
+.AllUserList .myprofile .recUser img{ 
+    border : 1px solid #cdc6c6
+  }
+
+.recommendForm span:hover{
+    color:#87C228;
+}
+
+#recModal .modal-body {
+    padding: 0px;
+    padding-bottom: 20px;
+}

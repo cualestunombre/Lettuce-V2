@@ -1,0 +1,343 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lettuce 채팅방</title>
+    <style>
+      body{
+        overflow-y: scroll
+      }
+    </style>
+    <link rel="stylesheet" href="/static/css/room.css" />
+  </head>
+  <body>
+    <div class="mWrapper" me="<%= me %>" value="<%= id %>">
+      <div class="mList">
+        <div class="mHeader">
+          <div class="mTitle"><%= data[0].nickName %></div>
+          <button class="mExit" onclick='location.href ="/chat" '>
+            나가기
+          </button>
+        </div>
+        <div class="mChat">
+          <div class="realChat"></div>
+          <div class="more">
+            <p class="virtual" style="height: 50px"></p>
+            <div class="square dnone">
+              <div class="spin"></div>
+            </div>
+          </div>
+        </div>
+        <div class="inputFlex">
+          <div class="filebox" onclick="clickE(event)">
+            <label for="ex_file">사진</label>
+            <input type="file"  accept="image/*" id="files" onchange="LoadImage(event)"> 
+          </div>
+
+        <input class="chatInput" type="text" />
+        <button class="sendBtn" onclick="sendFunc(event)">전송</button>
+        </div>
+        
+      </div>
+    </div>
+  
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+      integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      function clickE(event){
+        event.currentTarget.querySelector("input").click();
+      }
+      async function LoadImage(event){
+        if(event.target.files){
+          const uploadFile = event.target.files[0]
+          const formData = new FormData()
+          formData.append('image',uploadFile);
+          await axios({
+            method: 'post',
+            url: `/chat/image/${document.querySelector(".mWrapper").getAttribute("value")}`,
+            data: formData ,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+        }
+      }
+    </script>
+    <script>
+      const socket = io.connect(`http://49.50.167.217:8000/notification`, {
+        path: "/socket.io", cors: { origin: '*' }
+      });
+    </script>
+    <script>
+      const roomSocket = io.connect(`http://49.50.167.217:8000/room`, {
+        path: "/socket.io", cors: { origin: '*' }
+      });
+      let arr = [];
+      $("input").bind("input", () => {
+        roomSocket.emit("onTyping", {
+          referer: document.querySelector(".mWrapper").getAttribute("value"),
+        });
+      });
+      roomSocket.on("onTyping", (data) => {
+        if (
+          data.data == document.querySelector(".mWrapper").getAttribute("me")
+        ) {
+        } else {
+          console.log(arr);
+          if (arr.length != 0) {
+            clearTimeout(arr[0]);
+            arr.pop();
+            const temp = setTimeout(() => {
+              if (document.querySelector(".typing")) {
+                document.querySelector(".typing").remove();
+              }
+              arr.pop();
+            }, 1000);
+            arr.push(temp);
+          } else {
+            const chat = document.querySelector(".mChat");
+            const div = document.createElement("div");
+            div.innerText = "상대방이 타이핑 중입니다";
+            div.classList.add("typing");
+            div.classList.add("typing-demo");
+            chat.prepend(div);
+            const temp = setTimeout(() => {
+              if (document.querySelector(".typing")) {
+                document.querySelector(".typing").remove();
+              }
+              arr.pop();
+            }, 1000);
+            arr.push(temp);
+          }
+        }
+      });
+      roomSocket.on("enter", (data) => {
+        if (data.id != document.querySelector(".mWrapper").getAttribute("me")) {
+          document.querySelectorAll(".noCheck").forEach((ele) => {
+            ele.remove();
+          });
+        }
+      });
+    </script>
+    <script>
+      const me = document.querySelector(".mWrapper").getAttribute("me");
+      console.log(me);
+      roomSocket.on("message", (data) => {
+        offset += 1;
+        const target = document.querySelector(".realChat");
+        const profileWrapper = document.createElement("div");
+        profileWrapper.classList.add("pWrapper");
+        if (me == data.UserId) {
+          profileWrapper.classList.add("right");
+        }
+        const flexWrapper = document.createElement("div");
+        flexWrapper.classList.add("pinner");
+        const flex = document.createElement("div");
+        flex.classList.add("flex");
+        const img = document.createElement("img");
+        img.setAttribute("src", data.profile);
+        const nickName = document.createElement("span");
+        const contentBox = document.createElement("div");
+        contentBox.classList.add("contentBox");
+        contentBox.innerText = data.content;
+        const noCheck = document.createElement("div");
+        const time = document.createElement("div"); 
+        time.classList.add("timeStamp");
+        time.innerText=data.time;
+        flexWrapper.appendChild(time);
+        noCheck.innerText = "1";
+        noCheck.classList.add("noCheck");
+        if (me == data.UserId) {
+          time.classList.add("me");
+          contentBox.classList.add("me");
+          flex.classList.add("me");
+          if (data.reached == "false") {
+            flexWrapper.appendChild(noCheck);
+          }
+        } else {
+          time.classList.add("other");
+          contentBox.classList.add("other");
+          flex.classList.add("other");
+        }
+        nickName.innerText = data.nickName;
+        flex.appendChild(img);
+        flex.appendChild(nickName);
+        contentBox.appendChild(flex);
+        flexWrapper.appendChild(contentBox);
+        profileWrapper.appendChild(flexWrapper);
+        target.prepend(profileWrapper);
+      });
+      roomSocket.on("image", (data) => {
+        offset += 1;
+        const target = document.querySelector(".realChat");
+        const profileWrapper = document.createElement("div");
+        profileWrapper.classList.add("pWrapper");
+        if (me == data.UserId) {
+          profileWrapper.classList.add("right");
+        }
+        const flexWrapper = document.createElement("div");
+        flexWrapper.classList.add("pinner");
+        const flex = document.createElement("div");
+        flex.classList.add("flex");
+        const img = document.createElement("img");
+        img.setAttribute("src", data.profile);
+        const nickName = document.createElement("span");
+        const contentBox = document.createElement("div");
+        contentBox.classList.add("imgBox");
+        contentBox.setAttribute("style",`background-image: URL(${data.src});`);
+        const noCheck = document.createElement("div");
+        const time = document.createElement("div"); 
+        time.classList.add("timeStamp");
+        time.innerText=data.time;
+        flexWrapper.appendChild(time);
+        noCheck.innerText = "1";
+        noCheck.classList.add("noCheck");
+        if (me == data.UserId) {
+          time.classList.add("me");
+          contentBox.classList.add("me");
+          flex.classList.add("me");
+          if (data.reached == "false") {
+            flexWrapper.appendChild(noCheck);
+          }
+        } else {
+          time.classList.add("other");
+          contentBox.classList.add("other");
+          flex.classList.add("other");
+        }
+        nickName.innerText = data.nickName;
+        flex.appendChild(img);
+        flex.appendChild(nickName);
+        contentBox.appendChild(flex);
+        flexWrapper.appendChild(contentBox);
+        profileWrapper.appendChild(flexWrapper);
+        target.prepend(profileWrapper);
+      });
+    </script>
+    <script>
+      let cnt = 0;
+      let offset = 0;
+      const intersectionObserver = new IntersectionObserver(function (entries) {
+        // If intersectionRatio is 0, the target is out of view
+        // and we do not need to do anything.
+        if (entries[0].intersectionRatio <= 0) return;
+        loadItems(20);
+        console.log("Loaded new items");
+      });
+      // start observing
+      intersectionObserver.observe(document.querySelector(".virtual"));
+      const RoomId = document.querySelector(".mWrapper").getAttribute("value");
+      function loadItems(number) {
+        new Promise((resolve) => {
+          document.querySelector(".square").classList.remove("dnone");
+          setTimeout(async () => {
+            const data = await axios.get(
+              `/chat/comment?id=${RoomId}&count=${cnt}&offset=${offset}`
+            );
+            cnt += 1;
+            resolve(data.data);
+          }, 1000);
+        }).then((a) => {
+          const data = a.data;
+
+          if (a.code == "200") {
+            console.log(data);
+            data.forEach((data) => {
+              const target = document.querySelector(".realChat");
+              const profileWrapper = document.createElement("div");
+              profileWrapper.classList.add("pWrapper");
+              if (me == data.UserId) {
+                profileWrapper.classList.add("right");
+              }
+              const flexWrapper = document.createElement("div");
+              flexWrapper.classList.add("pinner");
+              const flex = document.createElement("div");
+              flex.classList.add("flex");
+              const img = document.createElement("img");
+              img.setAttribute("src", data.profile);
+              const nickName = document.createElement("span");
+              let contentBox = document.createElement("div");
+              if(data.src){
+                contentBox = document.createElement("div");
+                contentBox.setAttribute("style",`background-image: URL(${data.src});`);
+                contentBox.classList.add("imgBox");
+                
+              }
+              else{
+                contentBox.classList.add("contentBox");
+                contentBox.innerText = data.content;
+              }
+             
+              
+              const noCheck = document.createElement("div");
+              noCheck.innerText = "1";
+              noCheck.classList.add("noCheck");
+              const time = document.createElement("div"); 
+              time.classList.add("timeStamp");
+              time.innerText=data.time;
+              flexWrapper.appendChild(time);
+              if (me == data.UserId) {
+                
+                time.classList.add("me");
+                contentBox.classList.add("me");
+                flex.classList.add("me");
+                if (data.reached == "false") {
+                  flexWrapper.appendChild(noCheck);
+                }
+              } else {
+                time.classList.add("other");
+                contentBox.classList.add("other");
+                flex.classList.add("other");
+              }
+              nickName.innerText = data.nickName;
+              flex.appendChild(img);
+              flex.appendChild(nickName);
+              contentBox.appendChild(flex);
+              flexWrapper.appendChild(contentBox);
+              profileWrapper.appendChild(flexWrapper);
+              target.appendChild(profileWrapper);
+            });
+
+            if (document.querySelector(".mChat").scrollHeight <= 550) {
+              document.querySelector(".square").classList.add("dnone");
+              intersectionObserver.unobserve(
+                document.querySelector(".virtual")
+              );
+            }
+          } else {
+            document.querySelector(".square").classList.add("dnone");
+            intersectionObserver.unobserve(document.querySelector(".virtual"));
+          }
+        });
+      }
+    </script>
+    <script>
+      async function sendFunc(event) {
+        console.log("sdasd");
+        const input = event.target.parentNode.querySelector(".chatInput");
+        if (input.value.length == 0) {
+          swal("", "채팅을 입력해 주세요!", "warning");
+          return;
+        } else {
+          const data = await axios.post("/chat/chat", {
+            roomId: RoomId,
+            content: input.value,
+          });
+          input.value = "";
+          document.querySelector(".mChat").scrollTop = this.scrollTop;
+        }
+      }
+    </script>
+  </body>
+</html>

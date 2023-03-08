@@ -1,0 +1,433 @@
+#boardModal .board-body {
+    padding: 0 !important;
+}
+
+#boardModal .carousel-item img {
+    width: 548px;
+    height: 500px;
+    object-fit: contain;
+}
+
+#boardModal .card {
+    box-shadow: rgba(0, 0, 0, 0.4) 5px 4px 12px;
+    position: relative;
+    margin: 0;
+    background-color: white;
+    width: 100%;
+    height: auto;
+}
+
+#boardModal header img {
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    border: 1px solid #cdc6c6;
+}
+
+
+#boardModal header {
+    border-radius: 10px;
+    height: 70px;
+    background-color: rgb(250, 250, 250);
+}
+
+#boardModal .createdAt {
+    position: absolute;
+    top: 24px;
+    right: 10px;
+    font-size: 12px;
+    color: grey;
+}
+
+#boardModal .nickNameWrapper {
+    position: absolute;
+    top: 20px;
+    left: 70px;
+}
+
+#boardModal .card_image img {
+    width: 100%;
+    height: 500px;
+
+}
+
+#boardModal .info {
+    height: 50px;
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment {
+    margin: 0rem 1rem 1rem 1rem;
+    border-bottom: 1px solid #bdbbbb;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.comment_form form {
+    padding-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+}
+
+.comment_form form input {
+    width: 550px;
+    height: 30px;
+    border: none;
+    padding-left: 10px;
+}
+
+.comment_form form button {
+    font-size: 13px;
+    border: none;
+    background-color: white;
+}
+
+.come img {
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    border: 1px solid #cdc6c6;
+}
+
+#boardModal .info i {
+    font-size: 1.5rem;
+}
+
+#boardModal .info i:hover {
+    cursor: pointer;
+}
+
+#boardModal .dnone {
+    display: none;
+}
+
+
+#boardModal .square {
+    border: 0;
+    width: 80px;
+    padding: 0px;
+    margin-top: 40px;
+    margin-left: calc(50% - 40px);
+    margin-left: -webkit-calc(50% - 40px);
+    margin-left: -moz-calc(50% - 40px);
+    background-color: white
+}
+
+#boardModal .spin {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.1) 5px 4px 12px;
+    border: dashed 5px #87C228;
+    -webkit-animation-name: spin;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    background-color: white;
+    margin-bottom: 50px;
+}
+
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+#boardModal .noFollowText {
+    margin-top: 40px;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'HallymGothic-Regular';
+    margin-bottom: 20px;
+}
+
+#boardModal #logo {
+    width: 120px;
+
+}
+
+#boardModal .noFollowers {
+    box-shadow: rgba(0, 0, 0, 0.1) 5px 4px 12px;
+    border-radius: 5px;
+    background-color: #F9F4D9;
+    width: 400px;
+    height: 250px;
+    display: inline-block;
+}
+
+#boardModal .subText {
+    font-size: 15px;
+    color: rgb(150, 150, 150);
+    font-family: 'HallymGothic-Regular';
+    text-align: center;
+    margin-top: none;
+}
+
+#boardModal .more {
+    background-color: white
+}
+
+#boardModal .con {
+    background-color: white;
+    padding-top: 100px;
+    text-align: center;
+}
+
+#boardModal html {
+    background-color: white
+}
+
+div.commentPlace {
+    margin-left: 5px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.come1{
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+#delete {
+    height: 30px;
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: grey;
+    padding: 5px 9px;
+    font-size: 14px;
+
+}
+
+#boardModal #commentRegister {
+    height: 30px;
+    right: 10px;
+    bottom: 0px;
+    border: none;
+    border-radius: 5px;
+    background-color: #87C228;
+
+    color: white;
+    padding: 5px 9px;
+    font-size: 14px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    margin-right: 10px;
+}
+
+#boardModal #RegisterForm {
+    margin-bottom: 10px;
+    width: auto;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#boardModal #re {
+    margin-left: 10px;
+    border: none;
+    width: 400px;
+}
+
+#boardModal .bi-heart,
+#boardModal .bi-heart-fill {
+    margin: 0 10px;
+}
+
+#boardModal .fa-bookmark {
+    margin-right: 10px;
+}
+
+#boardModal .come {
+    padding: 5px 0 0 20px;
+    font-size: 15px;
+}
+
+#boardModal .bi-bookmark {
+    margin-right: 15px;
+    color: black;
+}
+
+#boardModal .bi-bookmark-fill {
+    margin-right: 15px;
+    color: rgb(250, 208, 103);
+}
+
+#boardModal .ll {
+    font-size: 12px;
+    color: rgb(158, 156, 154);
+    margin-left: 10px;
+
+}
+
+/* likelist modal css */
+#llist{
+    height: 200px;
+    overflow-y:auto;
+} 
+
+.likeUser {
+    margin: 10px;
+    height: 40px;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+  }
+  .likeProfile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .userEmail {
+    font-family: 'HallymGothic-Regular';
+    color: rgb(140, 140, 140);
+    font-size: 12px !important;
+  }
+
+  .userName {
+    font-weight: bolder;
+    font-family: 'HallymGothic-Regular';
+    font-size: 15px !important;
+  }
+
+  /* 팔로우 형식 */
+  .followUser .userEmail {
+    font-family: 'HallymGothic-Regular';
+    color: rgb(140, 140, 140);
+    font-size: 12px !important;
+    position: absolute;
+    right: 50px;
+  }
+
+  .followUser .userName {
+    font-weight: bolder;
+    font-family: 'HallymGothic-Regular';
+    font-size: 15px !important;
+    position: absolute;
+    left: 170px;
+  }
+
+  /*commentlist modal css */
+#clist{
+    height: 200px;
+    overflow-y:auto;
+} 
+#comment-title{
+    margin-left: 201px;
+}
+.commentUser {
+    height: 40px;
+    display: flex;
+    align-items: center;
+  }
+  .commentProfile {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  .commentName {
+    font-weight: bolder;
+    font-family: 'HallymGothic-Regular';
+  }
+
+.bi-heart, .bi-heart-fill {
+    margin: 0 10px;
+}
+.fa-bookmark {
+    margin-right: 10px;
+}
+.come {
+    padding: 8px 0 0 30px;
+    font-size: 15px;
+}
+.commentTime{
+    color:#cdc6c6;
+    font-size: 10px;
+}
+
+
+.fa-trash:hover{
+    cursor: pointer;
+}
+.delBtn{
+    margin-left: 5px;
+    border: none;
+    width:30px;
+    height:25px;
+    border-radius: 5px;
+    color:black;
+    font-weight: 600;
+    font-size: 8px;
+    padding: 0;
+}
+.commentTime {
+    margin-left: 10px;
+    font-size: 12px;
+    color: grey;
+}
+
+#likeModal{
+    --bs-modal-width: 320px !important;
+}
+
+.videoPosting{
+    width: 100%;
+    height: 494px;
+}
+
+.yeah .videoPosting{
+    width: 100%;
+    height: 100%;
+}
+
+.up{
+    position: fixed;
+    bottom: 100px;
+    right: 40px;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    z-index: 100;
+}
+#upIcon, #downIcon {
+    font-size: 40px; 
+    color: #87C128;
+    opacity: 0.8;
+}
+.down{
+    position: fixed;
+    bottom: 35px;
+    right: 40px;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    z-index: 100;
+}
+#upIcon:hover, #downIcon:hover {
+    opacity: 1;
+}
+
+.comments {
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+@media (max-width: 769px) {
+    .up, .down {
+        display: none;
+    }
+}

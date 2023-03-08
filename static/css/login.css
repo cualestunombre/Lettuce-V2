@@ -1,0 +1,167 @@
+@font-face {
+    font-family: 'HallymGothic-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2204@1.0/HallymGothic-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+* {
+    font-family: 'HallymGothic-Regular';
+}
+.wrap {
+    height: 98vh;
+    display: flex;
+    align-items: center;
+}
+.container {
+    width: 400px !important;
+    height: 520px !important;
+    background-color: #F9F4D9;
+    border-radius: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: auto;
+    text-align: center;
+}
+.signupContainer {
+    width: 400px !important;
+    height: 690px !important;
+    background-color: #F9F4D9;
+    border-radius: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: auto;
+    text-align: center;
+}
+.title img{
+    width: 200px !important;
+    height: 100px !important;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+.idInput, .nameInput, .nicknameInput {
+    width: 250px;
+    height: 35px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+}
+.nameInput, .nicknameInput {
+    width: 330px;
+}
+.pwInput {
+    width: 330px;
+    height: 35px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+}
+#loginPwInput {
+    width: 250px;
+}
+#pwInfo{
+    height: 40px;
+}
+.pwCheckFalse{
+    color:red;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    font-size: 13px;
+    color: grey;
+}
+.pwCheckTrue{
+    color:#87C228;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    font-size: 13px;
+    color: grey;
+}
+.birthDay {
+    font-size: 14px;
+}
+.birthDay select {
+    border: none;
+    border-radius: 3px;
+}
+.loginBtn, .signupBtn {
+    width: 180px;
+    height: 30px;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #87C228;
+}
+.loginBtn{
+    margin-top: 20px;
+}
+.signupBtn {
+    margin-bottom: 30px;
+}
+.loginBtn:hover, .signupBtn:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.line {
+    background-color: black;
+    width: 300px;
+    height: 1px;
+    margin: auto;
+}
+.kakaoBtn {
+    background-color: #FEE501;
+    width: 250px;
+    height: 30px;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+}
+.kakaoBtn:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.naverBtn {
+    background-color: #03c75a;
+    color: white;
+    width: 250px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.naverBtn:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.registered {
+    margin-top: 20px;
+    font-size: 14px;
+}
+.loginLink {
+    color: #87C228;
+    text-decoration: none;
+    font-weight: bold;
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+#emailCheckBtn{
+    border: none;
+    background-color: #87C228;
+    border-radius: 3px;
+    width: 70px;
+    height: 35px;
+    color: white;
+}
+#emailCheckBtn:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+button:hover{
+    cursor:pointer;
+}
+#passwordInfo{
+    font-size: 12px;
+    color: grey;
+    margin: 0;
+}

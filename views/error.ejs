@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>에러</title>
+    <style>
+        body{
+            background-color: #F9F4D9;
+        }
+        @font-face {
+            font-family: 'HallymGothic-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2204@1.0/HallymGothic-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+        * {
+            font-family: 'HallymGothic-Regular';
+        }
+        h1{
+            text-align: center;
+            margin-bottom: 0px;
+        }
+        h2{
+            text-align: center;
+        }
+        a{
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color:#87C228;;
+            font-size: 20px;
+            font-weight: bolder;
+        }
+        div{
+            text-align: center;
+        }
+        img{
+            margin-top: 50px;
+            height: 100px;
+            width:200px;
+        }
+        .errorMsg {
+            margin-top: 240px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <a href="/"><img src="/static/image/logo.png" alt=""></a>
+    </div>
+    <div class="errorMsg">
+        <h1>에러가 발생했어요!</h1>
+        <h2><%=error%></h2>
+        <a href="/">홈으로</a>
+    </div>
+    
+</body>
+</html>

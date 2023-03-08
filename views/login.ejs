@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/login.css">
+    <title>Lettuce 로그인</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="container">
+            <div class="title"><img src="/static/image/logo.png"></div>
+            <div style="font-size: 13px;">LET US WELCOME YOU</div>
+            <form class="form">
+                <input class="idInput" name="email" type="email" placeholder="  이메일을 입력하세요"><br>
+                <input id="loginPwInput" class="pwInput" name="password" type="password" placeholder="  비밀번호를 입력하세요"><br>
+                <button class="loginBtn" type="button" onclick="dynamicForm()">로그인</button><br>
+                <a href="/auth/join"><button class="signupBtn" type="button">회원가입</button></a>
+            </form>
+            <div class="line"></div>
+            <button class="kakaoBtn" onclick="kakaoLogin()"><i class="fa-sharp fa-solid fa-comment"></i> 카카오톡 계정으로 로그인</button>
+            <button class="naverBtn" onclick="naverLogin()"><img style="width: 23x; height: 23px" src="/static/image/naver_icon.png"></img> 네이버 계정으로 로그인</button>
+        </div>
+    </div>
+    <script>
+
+
+        // 카카오 로그인
+        function kakaoLogin() {
+           location.href = '/auth/kakao'
+        }
+        function naverLogin(){
+            location.href = '/auth/naver'
+        }
+
+        function dynamicForm() {
+            var form = document.querySelector("form");
+            var data = {
+                email : form.email.value,
+                password : form.password.value,
+            }
+            var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+            if(data.email.match(regExp) == null){
+                swal("","이메일 형식이 맞는지 확인해 주세요","warning");
+                return ;
+            }
+            if(data.password.length==0){
+                swal("","비밀번호를 입력해주세요","warning");
+                return;
+            }
+            axios ({
+                url:"/auth/login",
+                method:"post",
+                data : data
+            }).then((response) => {
+                if(response.data.code == 200){
+                    swal("","로그인 되었습니다.","success");
+                    return window.location = "/";
+                } 
+                else{
+                    swal("","유효하지 않은 이메일 또는 비밀번호 입니다","warning");
+                }
+            })
+        }
+        
+        //로그인
+        $(document).ready(function(){
+            $("#loginPwInput").keydown(function(key){
+            if(key.keyCode ==  13){
+                $(".loginBtn").click();
+            }
+            })
+        })
+    </script>
+</body>
+</html>
