@@ -1,4 +1,4 @@
-const {App} = require("./newApp.js");
+const {App} = require("./app.js");
 const express = require("express");
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
