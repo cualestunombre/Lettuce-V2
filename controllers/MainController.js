@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const {User,Post,PostMedia,Follow,Comment,Like,BookMark} = require("../models");
 const { Op } = require('sequelize');
-const {isLoggedIn,isNotLoggedIn } = require("./middlewares");
-
+const {isLoggedIn,isNotLoggedIn } = require("../middlewares/authMiddlewares");
+const {isJson,isRender} = require("../middlewares/typeMiddlewares");
 
 class MainController{
     router = express.Router();
@@ -14,33 +14,36 @@ class MainController{
     initializeRoutes(){
         const router = express.Router();
         router
-        .get("/",this.getMain)
-        .get("/fpost",isLoggedIn,getPost)
+        .get("/",isRender,this.getMain)
+        .get("/fpost",isJson,isLoggedIn,getPost)
         this.router.use(this.path,this.router);
     }
     getMain = async(req,res) =>{ // 메인 페이지를 렌더하는 로직
-        if(req.isAuthenticated()){
-            const postList = await Post.findAll({
-                raw: true,
-                where: {
-                  UserId: {
-                    [Op.in]: [req.user.id, ...(await Follow.findAll({ raw: true, where: { follower: req.user.id }, attributes: ['followed'] })).map(f => f.followed)]
-                  }
-                }
-              });
-
-            if(postList.length==0){
-                res.render('main',{code:400}); // view에게 팔로워가 없음을 알림
+        try{
+            if(req.isAuthenticated()){
+                const postList = await Post.findAll({
+                    raw: true,
+                    where: {
+                      UserId: {
+                        [Op.in]: [req.user.id, ...(await Follow.findAll({ raw: true, where: { follower: req.user.id }, attributes: ['followed'] })).map(f => f.followed)]
+                      }
+                    }
+                  });
+                postList.length == 0 ? res.response={...res.response,model:{code:400},view:"main"} : res.response={...res.response,model:{code:200},view:"main"};
+                next();
             }
             else{
-                res.render('main',{code:200}); // view에게 팔로워 있음을 알림
+                res.response={...res.response,type:"redirect",path:"/auth/login"}; //미인증 사용자 redirect
+                next();
             }
+        }catch(err){
+            
+            next(err);
         }
-        else{
-            res.redirect("/auth/login"); // 인증 안된 사용자 redirect
-        }
+        
     }
-    getPost = async(req,res,next)=>{
+    getPost = async(req,res,next)=>{ //게시물 fetch로직
+        try{
             let paginatedList = [];
             const offset = req.query.cnt * 5 - 1;
             const followingList = await User.findAll({
@@ -52,16 +55,20 @@ class MainController{
             //자신의 팔로워와 자신을 포함한 리스트 (전처리)
             paginatedList = handlePost(followingList,offset); //paginatedList에는 시간 순으로 정렬된 게시글이 담김
             handleDate(paginatedList); //paginatedList의 시간을 가공함 
-            handleLike(paginatedList);
-            handleBookMark(paginatedList);
-            handleComment(paginatedList);
+            handleLike(paginatedList); //paginatedList의 좋아요를 가공함
+            handleBookMark(paginatedList);  //paginatedList의 북마크를 가공함
+            handleComment(paginatedList); // paginatedList의 댓글을 가공함
             if(paginatedList.length==0){
-                res.response={code:400,message:"가져올 게시글이 없어요"}; 
+                res.response={code:400,message:"가져올 게시글이 없어요",...res.response}; 
             }
             else{
-                res.response={code:200,data:paginatedList,message:"성공적으로 게시글을 전송했어요"};
+                res.response={code:200,data:paginatedList,message:"성공적으로 게시글을 전송했어요",...res.response};
             }
             return next();
+        }catch(err){
+            next(err);
+        }
+            
             
             // 데이터 가공
             /* 데이터 형식

@@ -3,6 +3,7 @@ exports.isLoggedIn = (req,res,next)=>{
         next();
     }
     else{
+        res.response.isAuth=true;
         next(new Error("로그인이 필요합니다"));
     }
 }
@@ -11,6 +12,7 @@ exports.isNotLoggedIn = (req,res,next)=>{
         next();
     }
     else{
+        res.response.isAuth=true;
         next(new Error("이미 로그인 한 상태입니다"));
     }
 }
