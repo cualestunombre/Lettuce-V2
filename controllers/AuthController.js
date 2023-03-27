@@ -6,7 +6,7 @@ const { User } = require("../models");
 const { signUpType } = require("../type/signUpType");
 module.exports.AuthController=AuthController;
 
-class AuthController{
+class AuthController{ //인증 컨트롤러
   path="/auth";
   router = express.Router();
   constructor(){
@@ -31,7 +31,7 @@ class AuthController{
       failureRedirect: "/",
     }),
     (req, res) => { res.redirect("/");});
-    this.router.use(router);
+    this.router.use(this.path,router);
   }
 
   signup=async (req, res, next) => { //회원가입 로직
