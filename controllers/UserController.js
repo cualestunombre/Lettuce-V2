@@ -10,13 +10,17 @@ const {timeConverter} = require("../utility/timeConverter");
 
 module.exports.UserController=class UserController{ // 검색 및 알림 공통기능 컨트롤러
     router = express.Router();
+    path="/user";
     constructor(){
+        this.initializeRoutes();
+    }
+    initializeRoutes(){
         const router = this.router;
         router
         .get("/",isJson,isLoggedIn,searchUser)
         .get("/notification",isJson,isLoggedIn,getNotificationCount)
         .get("/notificationInfo",isJson,getNotificationInfo)
-        this.router.use("/user",router);
+        this.router.use(this.path,router);
     }
 
     searchUser = async (req,res,next)=>{ // 상단 검색창에서 유저나 이메일을 검색하는 로직
@@ -26,6 +30,7 @@ module.exports.UserController=class UserController{ // 검색 및 알림 공통�
             const arr = await sequelize.query(query, {type: QueryTypes.SELECT});
             res.response.data=arr;
             res.response.code=200;
+            res.response.message="검색 기록을 성공적으로 불러왔습니다";
             next();
         }catch(err){
             next(err);
@@ -37,6 +42,7 @@ module.exports.UserController=class UserController{ // 검색 및 알림 공통�
             const result = await Notification.findAll({where:{receiver:req.user.id, reached:"false", type: {[Op.ne]:"chat"},}});
             res.response.code=200;
             res.response.data=resulst.length;
+            res.response.message="알림 갯수를 성공적으로 불러왔습니다";
             next();
         }
         catch(err){
@@ -65,6 +71,7 @@ module.exports.UserController=class UserController{ // 검색 및 알림 공통�
           );
           filtered.forEach(timeConverter);
           res.response.data=filtered;
+          res.response.message="알림 목록을 성공적으로 불러 왔습니다";
           next();
         } catch (err) {
           next(err);

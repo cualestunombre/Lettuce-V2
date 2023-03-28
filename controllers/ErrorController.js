@@ -27,7 +27,7 @@ class ErrorController{
                 res.status(400).send({code:400,message:err.message});
             }
             else{
-                res.status(500).send({code:500,message:"내부 서버에러가 발생했습니다"});
+                res.status(500).send({code:500,message:"내부 서버에러가 발생했습니다ㅠㅠ"});
             }
         }
         
