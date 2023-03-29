@@ -110,10 +110,34 @@ const signUpType = (req, res, next) => {
          next();
      }
  }
+ /*
+ 바디의 email을 검증하는 미들웨어 함수
+ */
+const bodyEmailType = (req,res,next)=>{
+    if(!req.body.email){
+        res.response.code=400;
+        res.response.message="이메일을 body에 담아 주세요";
+        next("route");
+    }
+    const email = req.body.email;
+    const emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    const emailFlag = emailPattern.test(email);
+    if(emailFlag){
+        next();
+    }
+    else{
+        res.response.code=400;
+        res.response.message="유효한 이메일이 아닙니다";
+        next("route");
+    }
+
+}
   module.exports.queryPostIdType = queryPostIdType;
   module.exports.bodyPostIdType = bodyPostIdType;
   module.exports.signUpType = signUpType;
   module.exports.queryCntType = queryCntType;
   module.exports.querySearchType=querySearchType;
+  module.exports.bodyEmailType=bodyEmailType;
+  
 
   
