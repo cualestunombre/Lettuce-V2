@@ -3,8 +3,8 @@ const router = express.Router();
 const {User,Post,PostMedia,Follow,Comment,Like,BookMark} = require("../models");
 const { Op } = require('sequelize');
 const {isLoggedIn,isNotLoggedIn } = require("../middlewares/authMiddlewares");
-const {isJson,isRender} = require("../middlewares/typeMiddlewares");
-
+const {isJson,isRender} = require("../middlewares/returnTypeMiddlewares");
+const {queryCntType} = require("../middlewares/typeMiddleWares");
 class MainController{
     router = express.Router();
     path="/main";
@@ -15,7 +15,7 @@ class MainController{
         const router = express.Router();
         router
         .get("/",isRender,this.getMain)
-        .get("/fpost",isJson,isLoggedIn,getPost)
+        .get("/fpost",isJson,isLoggedIn,queryCntType,getPost);
         this.router.use(this.path,this.router);
     }
     getMain = async(req,res) =>{ // 메인 페이지를 렌더하는 로직
@@ -37,7 +37,6 @@ class MainController{
                 next();
             }
         }catch(err){
-            
             next(err);
         }
         
@@ -68,9 +67,6 @@ class MainController{
         }catch(err){
             next(err);
         }
-            
-            
-            // 데이터 가공
             /* 데이터 형식
             {   
         

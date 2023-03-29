@@ -5,7 +5,8 @@ const { sequelize } = require("../models");
 const {Sequelize:{Op}} = require("sequelize");
 const {Notification,User} = require("../models");
 const {isLoggedIn,isNotLoggedIn } = require("../middlewares/authMiddlewares");
-const {isJson,isRender} = require("../middlewares/typeMiddlewares");
+const {isJson,isRender} = require("../middlewares/returnTypeMiddlewares");
+const {querySearchType} = require("../middlewares/typeMiddleWares")
 const {timeConverter} = require("../utility/timeConverter");
 
 module.exports.UserController=class UserController{ // 검색 및 알림 공통기능 컨트롤러
@@ -17,7 +18,7 @@ module.exports.UserController=class UserController{ // 검색 및 알림 공통�
     initializeRoutes(){
         const router = this.router;
         router
-        .get("/",isJson,isLoggedIn,searchUser)
+        .get("/",isJson,isLoggedIn,querySearchType,searchUser)
         .get("/notification",isJson,isLoggedIn,getNotificationCount)
         .get("/notificationInfo",isJson,getNotificationInfo)
         this.router.use(this.path,router);

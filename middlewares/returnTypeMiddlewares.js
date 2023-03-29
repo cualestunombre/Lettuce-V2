@@ -1,0 +1,9 @@
+module.exports.isJson=(req,res,next)=>{
+    res.response={type:"json"};
+};
+module.exports.isRender=(req,res,next)=>{
+    res.response={type:"render"};
+};
+module.exports.isRedirect=(req,res,next)=>{
+    res.response={type:"redirect"};
+};

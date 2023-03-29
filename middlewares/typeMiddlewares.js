@@ -1,9 +1,119 @@
-module.exports.isJson=(req,res,next)=>{
-    res.response={type:"json"};
-};
-module.exports.isRender=(req,res,next)=>{
-    res.response={type:"render"};
-};
-module.exports.isRedirect=(req,res,next)=>{
-    res.response={type:"redirect"};
-};
+/*
+회원 가입 데이터의 유효성을 검사하는 미들웨어 함수
+*/
+
+const signUpType = (req, res, next) => {
+    const { email, nickName, password, birthday } = req.body;
+    const englishPattern = /[a-zA-Z]/;
+    const emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+  
+    const emailFlag = emailPattern.test(email);
+    const nickNameFlag = nickName.length <= 20 && nickName.length > 0;
+    const birthdayFlag = birthday instanceof Date;
+    let passwordFlag = false;
+  
+    let englishCount = 0;
+    let numberCount = 0;
+    let etcCount = 0;
+  
+    for (let i = 0; i < password.length; i++) {
+      const char = password[i];
+      if (!isNaN(parseInt(char))) {
+        numberCount += 1;
+      } else if (englishPattern.test(char)) {
+        englishCount += 1;
+      } else {
+        etcCount += 1;
+      }
+    }
+  
+    if (englishCount >= 1 && etcCount == 0 && numberCount >= 1 && englishCount + numberCount <= 18 && englishCount + numberCount >= 6) {
+      passwordFlag = true;
+    }
+  
+    if (emailFlag && nickNameFlag && birthdayFlag && passwordFlag) {
+      next();
+    } else {
+      res.response = { code: 400, message: "유효한 값이 아닙니다" };
+      next('route');
+    }
+  };
+
+
+  /*
+  바디의 postId를 검증하는 미들웨어 함수
+  */
+
+  const bodyPostIdType = (req,res,next)=>{
+        if(!req.body.postId){
+            res.response.code=400;
+            res.response.message="게시글 id를 body에 담아 주세요";
+            next("route");
+        }
+        else if(isNaN(Integer.parseInt(req.body.postId))){
+            res.response.code=400;
+            res.response.message = "유효한 id값이 아닙니다";
+            next('route');
+        }
+        else{
+            next();
+        }
+
+  }
+
+  /*
+  쿼리의 postId를 검증하는 미들웨어 함수
+  */
+  const queryPostIdType= (req,res,next)=>{
+    if(!req.query.PostId){
+        res.response.code=400;
+        res.response.message="게시글 id를 query에 담아 주세요";
+        next('route');
+    }
+    else if(isNaN(Integer.parseInt(req.query.PostId))){
+        res.response.code=400;
+        res.response.message = "유효한 id값이 아닙니다";
+        next('route');
+    }
+    else{
+        next();
+    }
+  }
+  /*
+  쿼리의 cnt를 검증하는 미들웨어 함수;
+  */
+  const queryCntType = (req,res,next)=>{
+      if(!req.query.cnt){
+          res.response.code=400;
+          res.response.message="페이지 cnt를 query에 담아 주세요";
+          next('route');
+      }
+      else if(isNaN(Integer.parseInt(req.query.cnt))){
+          res.response.code=400;
+          res.response.message = "유효한 cnt값이 아닙니다";
+          next('route');
+      }
+      else{
+          next();
+      }
+  }
+  /*
+  쿼리의 search를 검증하는 미들웨어 함수
+  */
+ const querySearchType = (req,res,next)=>{
+     if(!req.query.search){
+         res.response.code=400;
+         res.response.message="search를 query에 담아 주세요";
+         next('route');
+     }
+     else{
+         next();
+     }
+ }
+  module.exports.queryPostIdType = queryPostIdType;
+  module.exports.bodyPostIdType = bodyPostIdType;
+  module.exports.signUpType = signUpType;
+  module.exports.queryCntType = queryCntType;
+  module.exports.querySearchType=querySearchType;
+
+  

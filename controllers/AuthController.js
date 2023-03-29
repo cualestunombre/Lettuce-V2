@@ -2,9 +2,9 @@ const express = require("express");
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 const { isLoggedIn, isNotLoggedIn } = require("../middlewares/authMiddlewares");
-const {isJson,isRender} = require("../middlewares/typeMiddlewares");
+const {isJson,isRender} = require("../middlewares/returnTypeMiddlewares");
 const { User } = require("../models");
-const { signUpType } = require("../type/signUpType");
+const { signUpType,bodyEmailType } = require("../middlewares/typeMiddleWares");
 module.exports.AuthController=AuthController;
 
 class AuthController{ //인증 컨트롤러
@@ -19,7 +19,7 @@ class AuthController{ //인증 컨트롤러
     router
     .post("/signup", isJson,isNotLoggedIn,signUpType,this.signup) //회원 가입 처리 
     .post("/login",isJson,isNotLoggedIn,this.login) // 로그인 처리
-    .post("/emailCheck",isJson,isNotLoggedIn,this.emailCheck) //이메일 확인
+    .post("/emailCheck",isJson,isNotLoggedIn,bodyEmailType,this.emailCheck) //이메일 확인
     .get("/login",isRender,isNotLoggedIn,this.getLogin) //로그인 페이지 렌더링
     .get("/join",isRender,isNotLoggedIn,this.getJoin) // 회원가입 페이지 렌더링
     .get("/naver",isJson,passport.authenticate('naver', { authType: 'reprompt' })) //네이버 로그인

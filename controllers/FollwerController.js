@@ -5,8 +5,8 @@ const { QueryTypes } = require('sequelize');
 const { sequelize, Follow } = require("../models");
 const axios = require("axios");
 const {isLoggedIn,isNotLoggedIn } = require("../middlewares/authMiddlewares");
-const {isJson,isRender,isRedirect} = require("../middlewares/typeMiddlewares");
-
+const {isJson,isRender,isRedirect} = require("../middlewares/returnTypeMiddlewares");
+const {bodyIdType} =require("../middlewares/typeMiddleware");
 module.exports.FollowerController = class FollowerController{ //팔로워 관련 처리 컨트롤러
     path = "/recommend";
     router = express.Router();
@@ -17,8 +17,8 @@ module.exports.FollowerController = class FollowerController{ //팔로워 관련
         const router = express.Router();
         router
         .get("/",isJson,isLoggedIn,getRecommend)
-        .post("/follow",isLoggedIn,handleFollow)
-        .post("/unfollow",isLoggedIn,handleUnfollow)
+        .post("/follow",isLoggedIn,bodyIdType,handleFollow)
+        .post("/unfollow",isLoggedIn,bodyIdType,handleUnfollow)
 
         this.router.use("/recommend",router);
     }
@@ -66,12 +66,12 @@ module.exports.FollowerController = class FollowerController{ //팔로워 관련
 
      handleFollow=async (req, res,next) => { // 팔로우 처리 로직
         try{
-            const follow = await Follow.create({
+            await Follow.create({
                 follower: req.user.id,
                 followed: req.body.id
             })
             await axios.post("http://localhost:8000/realtime/follow", { sender: req.user.id, receiver: req.body.id });
-            res.response={...res.response,path:"/"};
+            res.response={...res.response,path:"/",message:"성공적으로 팔로우 했습니다"};
         }catch(err){
             next(err);
         }
@@ -79,13 +79,13 @@ module.exports.FollowerController = class FollowerController{ //팔로워 관련
 
     handleUnfollow=async (req, res,next) => { // 언팔로우 로직
         try{
-            const follow = await Follow.destroy({
+            await Follow.destroy({
                 where: {
                     follower: req.user.id,
                     followed: req.body.id
                 }
             });
-            res.response={...res.response,path:"/"};
+            res.response={...res.response,path:"/",message:"성공적으로 언팔로우 했습니다"};
         }catch(err){
             next(err);
         }
