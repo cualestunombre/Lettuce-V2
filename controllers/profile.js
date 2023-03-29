@@ -18,7 +18,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const { SessionSocketIdMap, User, Follow, Post, PostMedia, BookMark, Like, Comment } = require("../models");
-
+const {ip} = require("../message.json");
 router.get("/test", async (req, res) => {
     res.render('test');
 });
@@ -211,7 +211,7 @@ router.post("/follow", async (req, res) => {
         follower: req.user.id,
         followed: req.body.id
     })
-    await axios.post("http://localhost:8000/realtime/follow", { sender: req.user.id, receiver: req.body.id });
+    await axios.post(`${ip}/realtime/follow`, { sender: req.user.id, receiver: req.body.id });
     res.redirect('/');
 })
 

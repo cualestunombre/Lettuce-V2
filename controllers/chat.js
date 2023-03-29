@@ -21,6 +21,7 @@ const upload = multer({
     }),
     limits: { fileSize: 5 * 1024 * 1024*1024*1024 },
 })
+const {ip} = require("../message.json");
 
 router.get("/",isLoggedIn,async(req,res,next)=>{
     const data = await User.findAll({raw:true,include:[{model:User,as:"followings",attributes:['id','email','nickName','profile','comment'],where:{id:req.user.id}}]});//팔로잉 정보
@@ -83,7 +84,7 @@ router.get("/enter",isLoggedIn,async(req,res,next)=>{
         const data = await Room.create({type:"one",time:new Date()});
         await Allocate.create({UserId:req.user.id,RoomId:data.dataValues.id});
         await Allocate.create({UserId:id,RoomId:data.dataValues.id});
-        await axios.post("http://localhost:8000/realtime/room",{id:id,user:req.user}); 
+        await axios.post(`${ip}/realtime/room`,{id:id,user:req.user}); 
         res.send({url:`/chat/room/${data.dataValues.id}`});
     }
 });

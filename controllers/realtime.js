@@ -3,6 +3,9 @@ const router = express.Router();
 const {Notification,Post,SessionSocketIdMap,User} = require("../models");
 const { QueryTypes } = require('sequelize');
 const { sequelize } = require("../models");
+
+//컨트롤러에서 소켓을 사용하기 위한 컨트롤러
+
 router.post("/like",async(req,res,next)=>{
     const result = await Post.findOne({raw:true,where:{id:req.body.target}});
     await Notification.create({sender:req.body.sender, receiver:result.UserId, type:"like", reached:"false",PostId:result.id});

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {Comment,User,Post} = require("../models");
 const axios = require("axios");
+const {ip} =require("../message.json");
 //댓글 등록
 router.post("/comments",async(req,res)=>{ 
 
@@ -11,7 +12,7 @@ router.post("/comments",async(req,res)=>{
         comment:req.body.comment
     });
     const target = await Post.findOne({raw:true,where:{id:req.body.postId}});
-    await axios.post("http://localhost:8000/realtime/comment",{PostId:req.body.postId,receiver:target.UserId,sender:req.user.id});
+    await axios.post(`${ip}/realtime/comment`,{PostId:req.body.postId,receiver:target.UserId,sender:req.user.id});
     res.send({code:200});
 })
 
