@@ -5,8 +5,9 @@ const { Op } = require('sequelize');
 const {isLoggedIn,isNotLoggedIn } = require("../middlewares/authMiddlewares");
 const {isJson,isRender} = require("../middlewares/returnTypeMiddlewares");
 const {queryCntType} = require("../middlewares/typeMiddleWares");
-class MainController{
-    router = express.Router();
+const {Controller} = require("./Controller");
+class MainController extends Controller{
+    
     path="/main";
     constructor(){
         this.initializeRoutes();

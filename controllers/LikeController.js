@@ -9,13 +9,11 @@ const { isLoggedIn, isNotLoggedIn } = require("../middlewares/authMiddlewares");
 const {isJson,isRender} = require("../middlewares/returnTypeMiddlewares");
 const {ip} = require("../message.json");
 const {bodyPostIdType,queryPostIdType} =require("../middlewares/typeMiddleWares"); 
+const {Controller} = require("./Controller");
+module.exports.LikeController = class LikeController extends Controller{ // 좋아요 컨트롤러
 
-module.exports.LikeController = class LikeController{ // 좋아요 컨트롤러
-    router = express.Router();
     path="/like";
-    constructor(){
-        this.initializeRoutes();
-    }
+   
     initializeRoutes(){
         const router = express.Router();
         router

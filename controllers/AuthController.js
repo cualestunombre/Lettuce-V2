@@ -5,15 +5,11 @@ const { isLoggedIn, isNotLoggedIn } = require("../middlewares/authMiddlewares");
 const {isJson,isRender} = require("../middlewares/returnTypeMiddlewares");
 const { User } = require("../models");
 const { signUpType,bodyEmailType } = require("../middlewares/typeMiddleWares");
+const {Controller} = require("./Controller");
 module.exports.AuthController=AuthController;
 
-class AuthController{ //인증 컨트롤러
+class AuthController extends Controller{ //인증 컨트롤러
   path="/auth";
-  router = express.Router();
-  constructor(){
-    this.initializeRoutes();
-  }
-
   initializeRoutes(){
     const router = express.Router();
     router

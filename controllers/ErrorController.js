@@ -1,11 +1,8 @@
 const express = require("express");
+const {Controller} = require("./Controller");
 
-
-class ErrorController{
-    router=express.Router();
-    constructor(){
-        this.initializeRoutes();
-    }
+class ErrorController extends Controller{
+  
     initializeRoutes(){
         const router = express.Router();
         router.use(terminalResponse);

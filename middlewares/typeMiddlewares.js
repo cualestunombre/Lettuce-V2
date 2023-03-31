@@ -2,6 +2,8 @@
 회원 가입 데이터의 유효성을 검사하는 미들웨어 함수
 */
 
+const e = require("express");
+
 const signUpType = (req, res, next) => {
     const { email, nickName, password, birthday } = req.body;
     const englishPattern = /[a-zA-Z]/;
@@ -132,12 +134,44 @@ const bodyEmailType = (req,res,next)=>{
     }
 
 }
+/*
+전송자와 수신자의 id를 검증하는 미들웨어 함수
+*/
+const bodySenderReceiverType = (req,res,next)=>{
+  if(!req.body.sender || !req.body.target){
+    res.response.code=400;
+    res.response.message="전송자와 수신자의 id를에 body에 담아주세요";
+    next("route");
+  }
+  else{
+    if (isNaN(Integer.parseInt(req.body.sender))||isNaN(Integer.parseInt(req.body.target))){
+      res.response.code=400;
+      res.response.message="유효한 id를 body에 담아 주세요";
+      next("route");
+    }
+    else{
+      next();
+    }
+    
+  }
+}
+const queryIdType = (req,res,next)=>{
+  if(!req.query.id || isNaN(Integer.parseInt(req.query.id))){
+    res.response.code=400;
+    res.response.message="유효한 id를 query에 담아 주세요";
+    next("route");
+  }
+  else{
+    next();
+  }
+}
   module.exports.queryPostIdType = queryPostIdType;
   module.exports.bodyPostIdType = bodyPostIdType;
   module.exports.signUpType = signUpType;
   module.exports.queryCntType = queryCntType;
   module.exports.querySearchType=querySearchType;
   module.exports.bodyEmailType=bodyEmailType;
-  
+  module.exports.bodySenderReceiverType=bodySenderReceiverType;
+  module.exports.queryIdType=queryIdType;
 
   

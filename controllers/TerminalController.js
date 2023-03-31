@@ -1,11 +1,8 @@
 const express = require("express");
+const {Controller} = require("./Controller");
 
-
-class TerminalController{ //JSON형식의 응답은 필수적으로 거쳐야 함
-    router=express.Router();
-    constructor(){
-        this.initializeRoutes();
-    }
+class TerminalController extends Controller{ //JSON형식의 응답은 필수적으로 거쳐야 함
+    
     initializeRoutes(){
         const router = express.Router();
         router.use(terminalResponse);

@@ -1,10 +1,8 @@
 const express = require("express");
-
-module.exports.FrontController = class FrontController{
-    router = express.Router();
-    constructor(){
-        this.initializeRoutes();
-    }
+const {Controller} = require("./Controller");
+module.exports.FrontController = class FrontController extends Controller{
+    
+   
     initializeRoutes(){
         const router = express.Router();
         router.use(commonHandler);

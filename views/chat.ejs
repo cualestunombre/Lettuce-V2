@@ -6,8 +6,8 @@
     <title>Lettuce 채팅</title>
     <link rel="stylesheet" href="/static/css/chat.css" />
     <style>
-      body{
-        overflow-y: scroll
+      body {
+        overflow-y: scroll;
       }
     </style>
   </head>
@@ -82,7 +82,8 @@
   <script src="../static/js/searchUser.js"></script>
   <script>
     const chatSocket = io.connect(`http://49.50.167.217:8000/chat`, {
-      path: "/socket.io", cors: { origin: '*' }
+      path: "/socket.io",
+      cors: { origin: "*" },
     });
     chatSocket.on("room", (data) => {
       const list = document.querySelector(".roomContent");
@@ -146,7 +147,7 @@
   <script>
     document.querySelectorAll(".followWrapper").forEach(async (ele) => {
       const res = await axios.get(
-        `/realtime/socket?id=${ele.getAttribute("value")}`
+        `/realtime/active?id=${ele.getAttribute("value")}`
       );
       if (res.data.active) {
         const div = document.createElement("div");

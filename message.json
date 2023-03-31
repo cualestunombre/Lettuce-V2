@@ -1,3 +1,4 @@
 {
-    "ip":"http://localhost:8000"
+    "ip":"http://localhost:8000",
+    "server-secret":"Pn4lWRfEwqcVSfa4r8oIxISuRvK9lndq124sadxcnqeoweix21321knsdanxzckjksd"
 }

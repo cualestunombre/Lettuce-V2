@@ -8,12 +8,9 @@ const {isLoggedIn,isNotLoggedIn } = require("../middlewares/authMiddlewares");
 const {isJson,isRender,isRedirect} = require("../middlewares/returnTypeMiddlewares");
 const {bodyIdType} =require("../middlewares/typeMiddleware");
 const {ip} = require("../message.json");
-module.exports.FollowerController = class FollowerController{ //팔로워 관련 처리 컨트롤러
+const {Controller} = require("./Controller");
+module.exports.FollowerController = class FollowerController extends Controller{ //팔로워 관련 처리 컨트롤러
     path = "/recommend";
-    router = express.Router();
-    constructor(){
-        this.initializeRoutes();
-    }
     initializeRoutes(){
         const router = express.Router();
         router
@@ -71,7 +68,7 @@ module.exports.FollowerController = class FollowerController{ //팔로워 관련
                 follower: req.user.id,
                 followed: req.body.id
             })
-            await axios.post(`${ip}/realtime/follow`, { sender: req.user.id, receiver: req.body.id });
+            await axios.post(`${ip}/realtime/follow`, { secret:process.env.SERVER_SECRET,sender: req.user.id, receiver: req.body.id });
             res.response={...res.response,path:"/",message:"성공적으로 팔로우 했습니다"};
         }catch(err){
             next(err);
