@@ -22,6 +22,7 @@ Requirements Specification(요구사항 명세)
 11. 정적 파일 제공(html,css,image 등등)을 제외한 모든 요청은 공통 컨트롤러를 통해 처리할 것임. 
 12. 프론트 컨트롤러를 작성하여, 접속로그를 남기고자 함. 
 13. 최종적으로 서비스 객체에 대한 유닛테스트와 미들웨어(req,res)에대한 통합테스트 커버리지 100%를 달성하고자 함.
+14. 추후 유지보수의 편의성을 위해, System architecture, Usecase diagram, Usecase descriptions를 작성한다. 
 
 Defects of current system(현재 시스템의 결함)
 
