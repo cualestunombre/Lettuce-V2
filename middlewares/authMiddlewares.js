@@ -1,3 +1,4 @@
+const { Post } = require("../models");
 
 exports.isLoggedIn = (req,res,next)=>{
     if(req.isAuthenticated()){
@@ -27,3 +28,13 @@ exports.fromServer = (req,res,next)=>{
         next();
     }
 }
+exports.isMyPost = async (req, res, next) => {
+    const postId = req.query.id;
+    const data = await Post.findAll({raw: true, where: {id: postId, userId: req.user.id}});
+    if (data.length === 0) {
+        res.response.isAuth=true;
+      next(new Error("삭제하려는 게시물이 회원님 것이 아닙니다"));
+    } else {
+      next();
+    }
+  }

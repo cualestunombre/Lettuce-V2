@@ -7,17 +7,13 @@ const {isJson,isRender} = require("../middlewares/returnTypeMiddlewares");
 const {queryCntType} = require("../middlewares/typeMiddleWares");
 const {Controller} = require("./Controller");
 class MainController extends Controller{
-    
     path="/main";
-    constructor(){
-        this.initializeRoutes();
-    }
     initializeRoutes(){
         const router = express.Router();
         router
         .get("/",isRender,this.getMain)
         .get("/fpost",isJson,isLoggedIn,queryCntType,getPost);
-        this.router.use(this.path,this.router);
+        this.router.use(this.path,router);
     }
     getMain = async(req,res) =>{ // 메인 페이지를 렌더하는 로직
         try{

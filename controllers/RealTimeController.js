@@ -19,7 +19,8 @@ module.exports.RealTimeController= class RealTimeController extends Controller{
         .post("/follow",isJson,fromServer,bodySenderReceiverType,this.handleFollow)
         .post("/comment",isJson,fromServer,bodySenderReceiverType,bodyPostIdType,this.handleActive)
         .get("/active",isJson,isLoggedIn,queryIdType,this.handleActive)
-        .post("/room",isJson,fromServer,this.handleRoom)
+        .post("/room",isJson,fromServer,this.handleRoom);
+        this.router.use(path,router);
     }
     handleLike=(req,res,next)=>{ //좋아요를 실시간으로 알려주는 로직
         try{
