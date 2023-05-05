@@ -238,7 +238,7 @@ function getItem(boardId) {
 }
 
 async function deleteComent(event) {
-    const comentD = await axios.post("comment/commentDelete", {
+    const comentD = await axios.delete("comment/comments", {
         id: event.target.getAttribute("value"),
     });
     if (comentD.data.code == 200) {
@@ -331,7 +331,7 @@ function commentlist(event) {
     const postid = event.target.getAttribute("value");
     const data = { PostId: postid };
     axios({
-      url: "/comment/commentList",
+      url: "/comment/comments",
       method: "get",
       params: data,
     }).then((response) => {
@@ -379,7 +379,7 @@ function commentlist(event) {
   }
 
   async function listDelete(event) {
-    const comentD = await axios.post("comment/commentDelete", {
+    const comentD = await axios.delete("comment/comments", {
       id: event.target.getAttribute("value"),
     });
 
@@ -388,7 +388,7 @@ function commentlist(event) {
       const postid = event.target.getAttribute("url");
       const data = { PostId: postid };
       axios({
-        url: "/comment/commentList",
+        url: "/comment/comments",
         method: "get",
         params: data,
       }).then((response) => {

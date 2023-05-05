@@ -25,7 +25,10 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
     ></a>
     <link rel="stylesheet" href="/static/css/board.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"
+    />
     <title>Lettuce 게시글 전체 보기</title>
     <style>
       @font-face {
@@ -48,28 +51,28 @@
         display: none;
       }
 
-      .square{
-        border:0;
-        width:80px;
-        padding:0px;
+      .square {
+        border: 0;
+        width: 80px;
+        padding: 0px;
         margin-top: 40px;
         margin-left: calc(50% - 40px);
         margin-left: -webkit-calc(50% - 40px);
         margin-left: -moz-calc(50% - 40px);
-        background-color: rgb(255,255,255);
+        background-color: rgb(255, 255, 255);
       }
-      
+
       .spin {
         height: 80px;
         width: 80px;
         border-radius: 50%;
-        box-shadow: rgba(0, 0, 0, 0.1)  5px 4px 12px;
-        border:dashed 5px #87C228;
+        box-shadow: rgba(0, 0, 0, 0.1) 5px 4px 12px;
+        border: dashed 5px #87c228;
         -webkit-animation-name: spin;
         -webkit-animation-duration: 1.5s;
         -webkit-animation-iteration-count: infinite;
         -webkit-animation-timing-function: linear;
-        background-color: rgb(255,255,255);
+        background-color: rgb(255, 255, 255);
         margin-bottom: 50px;
       }
 
@@ -134,11 +137,10 @@
         transition: 0.5s;
         position: relative;
       }
-      .imgWrap > .icons{
+      .imgWrap > .icons {
         display: none;
-
       }
-      .imgWrap:hover > .icons{
+      .imgWrap:hover > .icons {
         display: block;
       }
       .imgWrap > .video-icons {
@@ -147,17 +149,17 @@
       .imgWrap:hover > .video-icons {
         display: block;
       }
-      .icons{
+      .icons {
         position: absolute;
         bottom: 10px;
         left: 10px;
       }
-      .video-icons{
+      .video-icons {
         position: absolute;
         bottom: 60px;
         left: 10px;
       }
-      .dnone{
+      .dnone {
         display: none;
       }
       #searchBtn {
@@ -171,23 +173,22 @@
         padding-top: 10px;
         font-size: 14px;
       }
-      .hash{
+      .hash {
         color: blue;
-      }  
-      #downScroll{
-        background-color: rgb(250,250,250);
-      }   
+      }
+      #downScroll {
+        background-color: rgb(250, 250, 250);
+      }
     </style>
   </head>
   <style>
-    body{
-      overflow-y: scroll
+    body {
+      overflow-y: scroll;
     }
   </style>
   <body>
     <%-include('navbar.ejs') %>
 
-   
     <!-- 게시글 탭  게시글 본문 -->
     <section class="post-area">
       <div class="tabs">
@@ -200,8 +201,10 @@
         </button>
       </div>
       <div id="tagSearch" style="text-align: center">
-        <input style="width: 300px;" type="text" id="tag" name="name" />
-        <button id="searchBtn" type="button" onclick="tagSearch();">검색</button>
+        <input style="width: 300px" type="text" id="tag" name="name" />
+        <button id="searchBtn" type="button" onclick="tagSearch();">
+          검색
+        </button>
         <div id="paragraph">
           <p>
             해시태그를 통한 검색을 할 수 있습니다. 단, '#' 문자를 제외하고
@@ -215,76 +218,82 @@
       <div class="list"></div>
     </div>
 
-  <div class="more" style="height: 100px; background-color: rgb(255, 255, 255)">
-    <p class="virtual"></p>
-    <div class="square dnone">
-      <div class="spin"></div>
+    <div
+      class="more"
+      style="height: 100px; background-color: rgb(255, 255, 255)"
+    >
+      <p class="virtual"></p>
+      <div class="square dnone">
+        <div class="spin"></div>
+      </div>
     </div>
-  </div>
 
-  <div class="up">
-    <a href="#"><i id="upIcon" class="fa-solid fa-circle-up"></i></a>
-  </div>
-  <div class="down">
-    <a href="#downScroll"><i id="downIcon" class="fa-solid fa-circle-down"></i></a>
-  </div>
+    <div class="up">
+      <a href="#"><i id="upIcon" class="fa-solid fa-circle-up"></i></a>
+    </div>
+    <div class="down">
+      <a href="#downScroll"
+        ><i id="downIcon" class="fa-solid fa-circle-down"></i
+      ></a>
+    </div>
 
- 
-  <div id="downScroll"></div>
-  <script>
-    let cnt = 0;
-    let isHash = false;
-    const $list = document.querySelector(".list");
+    <div id="downScroll"></div>
+    <script>
+      let cnt = 0;
+      let isHash = false;
+      const $list = document.querySelector(".list");
 
-    function tagSearch() {
-      // 매 검색마다 무한스크롤 옵저버 초기화
-      intersectionObserver.unobserve(document.querySelector(".virtual"));
-      cnt = 0;
-      $(".list").empty();
+      function tagSearch() {
+        // 매 검색마다 무한스크롤 옵저버 초기화
+        intersectionObserver.unobserve(document.querySelector(".virtual"));
+        cnt = 0;
+        $(".list").empty();
 
-      // 새로운 옵저버 선언
-      intersectionObserver = new IntersectionObserver(function(entries) {
-        if (entries[0].intersectionRatio <= 0) return;
-        loadItems(isHash);
-      });
-      // 옵저빙 시작
-      intersectionObserver.observe(document.querySelector(".virtual"));
-    }
+        // 새로운 옵저버 선언
+        intersectionObserver = new IntersectionObserver(function (entries) {
+          if (entries[0].intersectionRatio <= 0) return;
+          loadItems(isHash);
+        });
+        // 옵저빙 시작
+        intersectionObserver.observe(document.querySelector(".virtual"));
+      }
 
-    // 태그 검색을 위한 초기화
-    function reset() {
-      $("#tagSearch").css("display", "block");
-      $(".list").empty();
-      isHash = true;
-    }
+      // 태그 검색을 위한 초기화
+      function reset() {
+        $("#tagSearch").css("display", "block");
+        $(".list").empty();
+        isHash = true;
+      }
 
-    // Simulate a request to load data and render it to the list element;
-    function loadItems(isHash) {
-      new Promise((resolve) => {
-        document.querySelector(".square").classList.remove("dnone");
-        setTimeout(async () => {
-          let data;
-          if (isHash) {
-            let tag = $("#tag").val();
-            data = await axios.get(`/explore/list?tag=${tag}&cnt=${cnt}`);
-          } else {
-            data = await axios.get(`/explore/list?tag=no&cnt=${cnt}`);
-          }
-      
-          resolve(data.data);
-        }, 1000);
-      }).then((data) => {
-        if (data.code == 200) {
-          console.log(data);
-          const html = data.data.map(
-            (item) => ( item.src[0].type == "img" ? `
+      // Simulate a request to load data and render it to the list element;
+      function loadItems(isHash) {
+        new Promise((resolve) => {
+          document.querySelector(".square").classList.remove("dnone");
+          setTimeout(async () => {
+            let data;
+            if (isHash) {
+              let tag = $("#tag").val();
+              data = await axios.get(`/explore/list?tag=${tag}&cnt=${cnt}`);
+            } else {
+              data = await axios.get(`/explore/list?tag=no&cnt=${cnt}`);
+            }
+
+            resolve(data.data);
+          }, 1000);
+        }).then((data) => {
+          if (data.code == 200) {
+            console.log(data);
+            const html = data.data.map((item) =>
+              item.src[0].type == "img"
+                ? `
             <div class="imgWrap">
                   <div class="icons">
                     <i class="fa-regular fa-comments"> ${item.commentCnt}</i>
                     <i class="fa-regular fa-heart"> ${item.likeCnt}</i>
                   </div>
                   <img id="${item.id}" class="yeah" src="${item.src[0].src}" onclick = "getItem(${item.id});" data-bs-target = "#boardModal" like = "${item.likeCnt}" comment = "${item.commentCnt}">
-            </div>` :`<div class="imgWrap">
+            </div>`
+                : `<div class="imgWrap">
                         <div class="video-icons">
                           <i class="fa-regular fa-comments"> ${item.commentCnt}</i>
                           <i class="fa-regular fa-heart"> ${item.likeCnt}</i>
@@ -292,94 +301,92 @@
                 <div class="yeah">
                   <video class="videoPosting" controls="" onmouseover="videoPlay(this);" onmouseout="videoStop(this);" muted="" loop="loop" onclick = "getItem(${item.id});" id="${item.id}"><source src="${item.src[0].src}" type="video/mp4"></video>
                   </div>
-                  </div>`)
-          );
-          $list.innerHTML += html.join("");
-          cnt += 1;
-        } else {
-          intersectionObserver.unobserve(document.querySelector(".virtual"));
-        }
-        document.querySelector(".square").classList.add("dnone");
-      });
-    }
-
-    let intersectionObserver = new IntersectionObserver(function(entries) {
-      // If intersectionRatio is 0, the target is out of view
-      // and we do not need to do anything.
-      if (entries[0].intersectionRatio <= 0) return;
-      loadItems(isHash);
-    });
-    // start observing
-    intersectionObserver.observe(document.querySelector(".virtual"));
-
-
-    if ("<%=hash%>") {
-      reset();
-      $("#tag").val("<%=hash%>");
-      tagSearch();
-    } else {
-    }
-  </script>
-  <script>
-    async function deleteComent(event) {
-      const comentD = await axios.post("comment/commentDelete", {
-        id: event.target.getAttribute("value"),
-      });
-      if (comentD.data.code == 200) {
-        const postId = event.target.getAttribute("url");
-        const commentId = event.target.getAttribute("value");
-        const res = await axios.get(`/comment/comments?PostId=${postId}`);
-        document.querySelectorAll(`#c${postId}`).forEach((c) => {
-          c.remove();
+                  </div>`
+            );
+            $list.innerHTML += html.join("");
+            cnt += 1;
+          } else {
+            intersectionObserver.unobserve(document.querySelector(".virtual"));
+          }
+          document.querySelector(".square").classList.add("dnone");
         });
-        const space = document.querySelector(`div[url="${postId}"].comments`);
-        res.data.forEach((res) => {
-          let tag = `<a href="/profile?id=${res["User.id"]}"> <div class="come">
+      }
+
+      let intersectionObserver = new IntersectionObserver(function (entries) {
+        // If intersectionRatio is 0, the target is out of view
+        // and we do not need to do anything.
+        if (entries[0].intersectionRatio <= 0) return;
+        loadItems(isHash);
+      });
+      // start observing
+      intersectionObserver.observe(document.querySelector(".virtual"));
+
+      if ("<%=hash%>") {
+        reset();
+        $("#tag").val("<%=hash%>");
+        tagSearch();
+      } else {
+      }
+    </script>
+    <script>
+      async function deleteComent(event) {
+        const comentD = await axios.delete("comment/comments", {
+          id: event.target.getAttribute("value"),
+        });
+        if (comentD.data.code == 200) {
+          const postId = event.target.getAttribute("url");
+          const commentId = event.target.getAttribute("value");
+          const res = await axios.get(`/comment/comments?PostId=${postId}`);
+          document.querySelectorAll(`#c${postId}`).forEach((c) => {
+            c.remove();
+          });
+          const space = document.querySelector(`div[url="${postId}"].comments`);
+          res.data.forEach((res) => {
+            let tag = `<a href="/profile?id=${res["User.id"]}"> <div class="come">
                 <img src="${res["User.profile"]}"> ${res["User.nickName"]}</a>:${res.comment}
                 </div>`;
-          if (res.me) {
-            tag += `<button type="button" id ="delete" onclick="deleteComent(event)" url="${postId}"value="${res.id}">삭제</button>`;
-          }
-          const div = `<div class="commentPlace" id="c${postId}"> ${tag} </div>`;
-          space.innerHTML += div;
-          console.log(space);
+            if (res.me) {
+              tag += `<button type="button" id ="delete" onclick="deleteComent(event)" url="${postId}"value="${res.id}">삭제</button>`;
+            }
+            const div = `<div class="commentPlace" id="c${postId}"> ${tag} </div>`;
+            space.innerHTML += div;
+            console.log(space);
+          });
+          swal("", "댓글 삭제 성공", "success");
+        }
+      }
+      async function like(event) {
+        if (event.target.getAttribute("value") == "1") {
+          event.target.setAttribute("value", "0");
+          event.target.classList.remove("bi-heart-fill");
+          event.target.classList.add("bi-heart");
+        } else {
+          event.target.classList.add("bi-heart-fill");
+          event.target.classList.remove("bi-heart");
+          event.target.setAttribute("value", "1");
+        }
+        const postId = event.target.getAttribute("url");
+        const res = await axios.post("like/likes", {
+          postId: postId,
         });
-        swal("", "댓글 삭제 성공", "success");
+        if (res.data.code == 200) {
+          swal("", "좋아요 등록 완료!", "success");
+        } else {
+          swal("", "좋아요 취소", "success");
+        }
       }
-    }
-    async function like(event) {
-      if (event.target.getAttribute("value") == "1") {
-        event.target.setAttribute("value", "0");
-        event.target.classList.remove("bi-heart-fill");
-        event.target.classList.add("bi-heart");
-      } else {
-        event.target.classList.add("bi-heart-fill");
-        event.target.classList.remove("bi-heart");
-        event.target.setAttribute("value", "1");
+
+      function videoPlay(e) {
+        e.play();
       }
-      const postId = event.target.getAttribute("url");
-      const res = await axios.post("like/likes", {
-        postId: postId,
-      });
-      if (res.data.code == 200) {
-        swal("", "좋아요 등록 완료!", "success");
-      } else {
-        swal("", "좋아요 취소", "success");
+      function videoStop(e) {
+        e.pause();
       }
-    }
+    </script>
 
-    function videoPlay(e) {
-    e.play();
-  }
-  function videoStop(e) {
-    e.pause();
-  }
-  </script>
-
-  <script src="../static/js/searchUser.js"></script>
-  <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
-  <script src="../static/js/notification.js"></script>
-  <script src="/static/js/board.js"></script>
-</body>
-
+    <script src="../static/js/searchUser.js"></script>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script src="../static/js/notification.js"></script>
+    <script src="/static/js/board.js"></script>
+  </body>
 </html>
