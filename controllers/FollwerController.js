@@ -15,9 +15,8 @@ module.exports.FollowerController = class FollowerController extends Controller{
         const router = express.Router();
         router
         .get("/",isJson,isLoggedIn,getRecommend)
-        .post("/follow",isLoggedIn,bodyIdType,handleFollow)
-        .post("/unfollow",isLoggedIn,bodyIdType,handleUnfollow)
-
+        .post("/follow",isJson,isLoggedIn,bodyIdType,handleFollow)
+        .post("/unfollow",isJson,isLoggedIn,bodyIdType,handleUnfollow)
         this.router.use("/recommend",router);
     }
     getRecommend=async (req, res, next) => { // 팔로워 추천 로직
