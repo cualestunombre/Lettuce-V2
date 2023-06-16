@@ -4,6 +4,8 @@
 
 const e = require("express");
 
+
+
 const signUpType = (req, res, next) => {
     const { email, nickName, password, birthday } = req.body;
     const englishPattern = /[a-zA-Z]/;
@@ -165,6 +167,17 @@ const queryIdType = (req,res,next)=>{
     next();
   }
 }
+
+const queryOffsetType = (req,res,next)=>{
+  if(!req.query.offset || isNaN(Integer.parseInt(req.query.offset))){
+    res.response.code=400;
+    res.response.message="유효한 offset을 query에 담아 주세요";
+    next("route");
+  }else{
+    next();
+  }
+}
+  module.exports.queryOffsetType = queryOffsetType;
   module.exports.queryPostIdType = queryPostIdType;
   module.exports.bodyPostIdType = bodyPostIdType;
   module.exports.signUpType = signUpType;

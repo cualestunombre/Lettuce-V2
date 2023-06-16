@@ -1,5 +1,4 @@
 const express= require("express");
-const router = express.Router();
 const {Notification,Post,SessionSocketIdMap,User} = require("../models");
 const { QueryTypes } = require('sequelize');
 const { sequelize } = require("../models");

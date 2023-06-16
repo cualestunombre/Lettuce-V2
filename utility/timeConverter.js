@@ -26,3 +26,19 @@ module.exports.dateTimeConverter = (ele)=>{
       ele.time=`${parseInt(parseInt((now-ele.createdAt.getTime())/1000)/60)}분전`;
   }
 }
+
+module.exports.KSTConverter = (ele)=>{
+  for(let i = 0; i<ele.length;i++){
+    let date = ele[i]['Chats.createdAt'];
+    let sendDate = date.getFullYear()+'년 '+(parseInt(date.getMonth())+1)+'월 '+date.getDate()+"일 ";         
+    if(date.getHours()<12){
+        sendDate+="오전 "+date.getHours()+"시 ";
+    }
+    else{
+        sendDate+='오후 '+(parseInt(date.getHours())-12)+"시 ";
+    }
+    sendDate+=+date.getMinutes()+"분";
+    ele[i].time = sendDate;
+    
+}
+}

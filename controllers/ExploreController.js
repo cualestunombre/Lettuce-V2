@@ -1,8 +1,7 @@
 
 const express = require("express");
 const { isRender, isJson } = require("../middlewares/returnTypeMiddlewares");
-const router = express.Router();
-const { User, Post, PostMedia, Follow, HashTag, Like, Comment } = require("../models");
+const { Like, Comment } = require("../models");
 const { Controller } = require("./Controller");
 const { isLoggedIn } = require("./middlewares");
 

@@ -1,4 +1,4 @@
-const { Post } = require("../models");
+const { Post, Allocate } = require("../models");
 
 exports.isLoggedIn = (req,res,next)=>{
     if(req.isAuthenticated()){
@@ -29,12 +29,47 @@ exports.fromServer = (req,res,next)=>{
     }
 }
 exports.isMyPost = async (req, res, next) => {
-    const postId = req.query.id;
-    const data = await Post.findAll({raw: true, where: {id: postId, userId: req.user.id}});
-    if (data.length === 0) {
-        res.response.isAuth=true;
-      next(new Error("삭제하려는 게시물이 회원님 것이 아닙니다"));
-    } else {
-      next();
+    try{
+        const postId = req.query.id;
+        const data = await Post.findAll({raw: true, where: {id: postId, userId: req.user.id}});
+        if (data.length === 0) {
+            res.response.isAuth=true;
+          next(new Error("삭제하려는 게시물이 회원님 것이 아닙니다"));
+        } else {
+          next();
+        }
+    }catch(err){
+        next(err);
     }
-  }
+    
+}
+
+exports.isMyRoom = async (req,res,next) => {
+    try{
+        const roomid = req.params.id;
+        const data = await Allocate.findAll({raw:true,where:{RoomId:roomid,UserId:req.user.id}});
+        if(data.length!=1){
+            throw new Error("비정상적인 접근입니다");
+        }
+        else{
+            next();
+        }
+    }catch(err){
+        next(err);
+    }
+    
+}
+
+exports.isMyRoomBody = async (req,res,next)=>{
+    try{
+        const roomid = req.body.roomId;
+        const data = await Allocate.findAll({raw:true,where:{RoomId:roomid,UserId:req.user.id}});
+        if(data.length!=1){
+            throw new Error("비정상적인 접근입니다");
+        }else{
+            next();
+        }
+    }catch(err){
+        next(err);
+    }
+}
